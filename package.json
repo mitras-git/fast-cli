@@ -1,0 +1,19 @@
+{
+  "name": "fast-cli",
+  "version": "1.0.0",
+  "description": "This is a CLI tool to measure download speed with the help of fast.com servers",
+  "main": "index.js",
+  "bin": {
+    "fast-cli": "./index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Aditya Mitra",
+  "license": "MIT",
+  "dependencies": {
+    "minimist": "^1.2.8",
+    "puppeteer": "^19.9.0",
+    "puppeteer-core": "^19.9.0"
+  }
+}
