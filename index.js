@@ -41,13 +41,15 @@ if (args.help || args.h) {
         let loadingSign = '|';
         while (elapsedTime < time) {
             const downloadElement = await page.$('#speed-value');
+            const speedTypeElement = await page.$('#speed-units');
             downloadSpeed = await page.evaluate(downloadElement => downloadElement.textContent, downloadElement);
+            const speedType = await page.evaluate(speedTypeElement => speedTypeElement.textContent, speedTypeElement);
             if (showUpload) {
                 const uploadElement = await page.$('#upload-value');
                 uploadSpeed = await page.evaluate(uploadElement => uploadElement.textContent, uploadElement);
-                process.stdout.write(`\r ${downloadSpeed.trim()} Mbps ↓ | ${uploadSpeed.trim()} Mbps ↑ ${loadingSign}`);
+                process.stdout.write(`\r ${downloadSpeed.trim()} ${speedType} ↓ | ${uploadSpeed.trim()} ${speedType} ↑ ${loadingSign}`);
             } else {
-                process.stdout.write(`\r ${downloadSpeed.trim()} Mbps ↓ ${loadingSign}`);
+                process.stdout.write(`\r ${downloadSpeed.trim()} ${speedType} ↓ ${loadingSign}`);
             }
             loadingSign = loadingSign === '|' ? '/' : loadingSign === '/' ? '-' : loadingSign === '-' ? '\\' : '|';
             await page.waitForTimeout(500);
