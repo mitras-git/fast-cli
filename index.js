@@ -37,19 +37,20 @@ if (args.help || args.h) {
 
         let elapsedTime = 0;
         let downloadSpeed = 0;
+        let speedType = 'Mbps';
         let uploadSpeed = 0;
         let loadingSign = '|';
         while (elapsedTime < time) {
             const downloadElement = await page.$('#speed-value');
             const speedTypeElement = await page.$('#speed-units');
             downloadSpeed = await page.evaluate(downloadElement => downloadElement.textContent, downloadElement);
-            const speedType = await page.evaluate(speedTypeElement => speedTypeElement.textContent, speedTypeElement);
+            speedType = await page.evaluate(speedTypeElement => speedTypeElement.textContent, speedTypeElement);
             if (showUpload) {
                 const uploadElement = await page.$('#upload-value');
                 uploadSpeed = await page.evaluate(uploadElement => uploadElement.textContent, uploadElement);
-                process.stdout.write(`\r ${downloadSpeed.trim()} ${speedType} ↓ | ${uploadSpeed.trim()} ${speedType} ↑ ${loadingSign}`);
+                process.stdout.write(`\r ${downloadSpeed.trim()} ${speedType.trim()} ↓ | ${uploadSpeed.trim()} ${speedType.trim()} ↑ ${loadingSign}`);
             } else {
-                process.stdout.write(`\r ${downloadSpeed.trim()} ${speedType} ↓ ${loadingSign}`);
+                process.stdout.write(`\r ${downloadSpeed.trim()} ${speedType.trim()} ↓ ${loadingSign}`);
             }
             loadingSign = loadingSign === '|' ? '/' : loadingSign === '/' ? '-' : loadingSign === '-' ? '\\' : '|';
             await page.waitForTimeout(500);
